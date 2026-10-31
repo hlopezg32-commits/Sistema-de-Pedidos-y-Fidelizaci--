@@ -181,4 +181,22 @@ public class ProductoDAO implements CrudDAO<Producto> {
                 rs.getString("estado")
         );
     }
+    
+    public boolean reactivar(int idProducto) {
+    String sql = "UPDATE productos SET estado = 'ACTIVO' "
+               + "WHERE id_producto = ? AND estado = 'INACTIVO'";
+
+    try (Connection con = ConexionDB.conectar();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, idProducto);
+
+        return ps.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        System.out.println("Error al reactivar producto: "
+                           + e.getMessage());
+        return false;
+    }
+}
 }

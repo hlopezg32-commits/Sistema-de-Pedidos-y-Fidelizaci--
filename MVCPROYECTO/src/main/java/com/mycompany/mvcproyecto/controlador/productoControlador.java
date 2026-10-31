@@ -166,5 +166,23 @@ public class productoControlador {
 
         return "redirect:/productos";
     }
+    
+    @PostMapping("/reactivar/{id}")
+public String reactivarProducto(
+        @PathVariable("id") int id,
+        RedirectAttributes redirectAttributes) {
+
+    boolean reactivado = productoDAO.reactivar(id);
+
+    if (reactivado) {
+        redirectAttributes.addFlashAttribute(
+                "mensaje", "Producto reactivado correctamente.");
+    } else {
+        redirectAttributes.addFlashAttribute(
+                "error", "No se pudo reactivar el producto.");
+    }
+
+    return "redirect:/productos";
+}
   
 }

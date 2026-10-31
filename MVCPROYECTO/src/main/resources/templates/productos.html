@@ -750,6 +750,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                                     <i class="bi bi-archive"></i>
                                                 </button>
                                             </form>
+                                            
+                                            <form th:if="${p.estado != 'ACTIVO'}"
+                                                th:action="@{/productos/reactivar/{id}(id=${p.idProducto})}"
+                                                method="post"
+                                                onsubmit="return confirm('¿Deseas reactivar este producto?');">
+
+                                              <button type="submit"
+                                                      class="btn btn-outline-success boton-icono"
+                                                      title="Reactivar producto"
+                                                      aria-label="Reactivar producto">
+                                                  <i class="bi bi-arrow-counterclockwise"></i>
+                                              </button>
+                                          </form>
 
                                         </div>
                                     </td>
