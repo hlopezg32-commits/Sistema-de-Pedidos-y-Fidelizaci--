@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subnotway - Sistema de Pedidos y Fidelización</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+            <i class="bi bi-shop me-2"></i>Subnotway
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ventas}">Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/productos}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/clientes}">Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/fidelizacion}">Fidelización</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/reportes}">Reportes PDF</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="p-5 mb-4 bg-white rounded-3 shadow-sm border">
+        <div class="container-fluid py-2">
+            <h1 class="display-6 fw-bold text-success">
+                <i class="bi bi-shop me-2"></i>Sistema Subnotway
+            </h1>
+            <p class="col-md-9 fs-5 text-muted">
+                Plataforma integral de gestión de pedidos, ventas, inventario y programa de fidelización "Pan, Puntos y Premios".
+            </p>
+            <div class="d-flex flex-wrap gap-2 pt-2">
+                <a th:href="@{/ventas}" class="btn btn-success btn-lg">
+                    <i class="bi bi-cart3 me-1"></i>Punto de Venta
+                </a>
+                <a th:href="@{/fidelizacion}" class="btn btn-outline-success btn-lg">
+                    <i class="bi bi-award me-1"></i>Fidelización
+                </a>
+                <a th:href="@{/reportes}" class="btn btn-outline-danger btn-lg">
+                    <i class="bi bi-file-earmark-pdf me-1"></i>Reportes PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="bi bi-cart3 me-1"></i> Terminal de Ventas
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted">
+                        Toma de pedidos en caja con selección rápida de productos y combos, cálculo de cambio y acumulación automática de puntos.
+                    </p>
+                    <a th:href="@{/ventas}" class="btn btn-outline-success">Ir a Ventas</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="bi bi-box-seam me-1"></i> Productos e Inventario
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted">
+                        Catálogo de productos, control de stock disponible, alertas de existencias bajas y reabastecimiento con registro de entrada.
+                    </p>
+                    <a th:href="@{/productos}" class="btn btn-outline-success">Ver Productos</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="bi bi-people me-1"></i> Clientes
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted">
+                        Directorio de clientes registrados, edición de datos de contacto y consulta rápida de saldos para el programa de fidelización.
+                    </p>
+                    <a th:href="@{/clientes}" class="btn btn-outline-success">Ver Clientes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    <i class="bi bi-award me-1"></i> Programa de Fidelización
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted">
+                        Consulta de saldos de clientes, historial de movimientos de puntos y canje de recompensas según el inventario disponible.
+                    </p>
+                    <a th:href="@{/fidelizacion}" class="btn btn-outline-warning text-dark">Abrir Fidelización</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-danger text-white fw-bold">
+                    <i class="bi bi-file-earmark-pdf me-1"></i> Reportes en PDF
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted">
+                        Generación y descarga de reportes oficiales de ventas por período, productos más vendidos, stock crítico y canjes.
+                    </p>
+                    <a th:href="@{/reportes}" class="btn btn-outline-danger">Descargar Reportes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center text-muted py-4 mt-5">
+    <small>Subnotway &copy; 2026 - Pan, Puntos y Premios</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
