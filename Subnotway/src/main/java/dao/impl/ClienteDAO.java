@@ -81,7 +81,6 @@ public class ClienteDAO implements CrudDAO<Cliente> {
 
     @Override
     public boolean eliminar(Cliente cliente) {
-        // Se desactiva el cliente en lugar de borrar su registro.
         String sql = """
             UPDATE clientes
             SET estado = 'INACTIVO'
@@ -186,6 +185,18 @@ public class ClienteDAO implements CrudDAO<Cliente> {
         } catch (SQLException e) {
             throw new IllegalStateException(
                     "No se pudo listar los clientes.", e);
+        }
+    }
+
+    public boolean actualizarPuntos(int idCliente, int puntos) {
+        String sql = "UPDATE clientes SET puntos = ? WHERE id_cliente = ?";
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, puntos);
+            ps.setInt(2, idCliente);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new IllegalStateException("No se pudo actualizar los puntos del cliente.", e);
         }
     }
 

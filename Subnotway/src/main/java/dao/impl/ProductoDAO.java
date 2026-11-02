@@ -16,7 +16,6 @@ public class ProductoDAO implements CrudDAO<Producto> {
 
     @Override
     public boolean insertar(Producto producto) {
-
         String sql = "INSERT INTO productos "
                 + "(codigo, nombre, categoria, precio, existencia) "
                 + "VALUES (?, ?, ?, ?, ?)";
@@ -44,8 +43,7 @@ public class ProductoDAO implements CrudDAO<Producto> {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al insertar producto: "
-                    + e.getMessage());
+            System.out.println("Error al insertar producto: " + e.getMessage());
         }
 
         return false;
@@ -53,7 +51,6 @@ public class ProductoDAO implements CrudDAO<Producto> {
 
     @Override
     public boolean actualizar(Producto producto) {
-
         String sql = "UPDATE productos SET codigo = ?, nombre = ?, "
                 + "categoria = ?, precio = ?, existencia = ?, estado = ? "
                 + "WHERE id_producto = ?";
@@ -72,8 +69,7 @@ public class ProductoDAO implements CrudDAO<Producto> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar producto: "
-                    + e.getMessage());
+            System.out.println("Error al actualizar producto: " + e.getMessage());
         }
 
         return false;
@@ -81,20 +77,32 @@ public class ProductoDAO implements CrudDAO<Producto> {
 
     @Override
     public boolean eliminar(Producto producto) {
-
-        String sql = "UPDATE productos SET estado = 'INACTIVO' "
-                + "WHERE id_producto = ?";
+        String sql = "UPDATE productos SET estado = 'INACTIVO' WHERE id_producto = ?";
 
         try (Connection conexion = ConexionDB.conectar();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setInt(1, producto.getIdProducto());
-
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Error al desactivar producto: "
-                    + e.getMessage());
+            System.out.println("Error al desactivar producto: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    public boolean reactivar(int idProducto) {
+        String sql = "UPDATE productos SET estado = 'ACTIVO' WHERE id_producto = ?";
+
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setInt(1, idProducto);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al reactivar producto: " + e.getMessage());
         }
 
         return false;
@@ -102,7 +110,6 @@ public class ProductoDAO implements CrudDAO<Producto> {
 
     @Override
     public Producto buscarPorId(int id) {
-
         String sql = "SELECT * FROM productos WHERE id_producto = ?";
 
         try (Connection conexion = ConexionDB.conectar();
@@ -117,8 +124,7 @@ public class ProductoDAO implements CrudDAO<Producto> {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al buscar producto: "
-                    + e.getMessage());
+            System.out.println("Error al buscar producto: " + e.getMessage());
         }
 
         return null;
@@ -126,9 +132,7 @@ public class ProductoDAO implements CrudDAO<Producto> {
 
     @Override
     public List<Producto> listarTodos() {
-
         List<Producto> productos = new ArrayList<>();
-
         String sql = "SELECT * FROM productos ORDER BY id_producto";
 
         try (Connection conexion = ConexionDB.conectar();
@@ -140,15 +144,32 @@ public class ProductoDAO implements CrudDAO<Producto> {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al listar productos: "
-                    + e.getMessage());
+            System.out.println("Error al listar productos: " + e.getMessage());
+        }
+
+        return productos;
+    }
+
+    public List<Producto> listarActivos() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM productos WHERE estado = 'ACTIVO' ORDER BY categoria, nombre";
+
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                productos.add(mapearProducto(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar productos activos: " + e.getMessage());
         }
 
         return productos;
     }
 
     public Producto buscarPorCodigo(String codigo) {
-
         String sql = "SELECT * FROM productos WHERE codigo = ?";
 
         try (Connection conexion = ConexionDB.conectar();
@@ -163,15 +184,39 @@ public class ProductoDAO implements CrudDAO<Producto> {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al buscar producto por código: "
-                    + e.getMessage());
+            System.out.println("Error al buscar producto por codigo: " + e.getMessage());
         }
 
         return null;
     }
 
-    private Producto mapearProducto(ResultSet rs) throws SQLException {
+    public boolean actualizarExistencia(int idProducto, int nuevaExistencia) {
+        String sql = "UPDATE productos SET existencia = ? WHERE id_producto = ?";
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, nuevaExistencia);
+            ps.setInt(2, idProducto);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar existencia: " + e.getMessage());
+        }
+        return false;
+    }
 
+    public boolean reabastecerExistencia(int idProducto, int cantidadAdicional) {
+        String sql = "UPDATE productos SET existencia = existencia + ? WHERE id_producto = ?";
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, cantidadAdicional);
+            ps.setInt(2, idProducto);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Error al reabastecer producto: " + e.getMessage());
+        }
+        return false;
+    }
+
+    private Producto mapearProducto(ResultSet rs) throws SQLException {
         return new Producto(
                 rs.getInt("id_producto"),
                 rs.getString("codigo"),
