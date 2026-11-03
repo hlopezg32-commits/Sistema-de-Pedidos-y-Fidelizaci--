@@ -1,8 +1,10 @@
 package controlador;
 
+import dao.impl.PedidoDAO;
 import modelo.Canje;
 import modelo.Cliente;
 import modelo.MovimientoPuntos;
+import modelo.Pedido;
 import modelo.Recompensa;
 import modelo.ResultadoCanje;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import java.util.List;
 public class FidelizacionController {
 
     private final FidelizacionService fidelizacionService;
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
 
     public FidelizacionController(FidelizacionService fidelizacionService) {
         this.fidelizacionService = fidelizacionService;
@@ -52,8 +55,10 @@ public class FidelizacionController {
         if (clienteSeleccionado != null) {
             List<MovimientoPuntos> movimientos = fidelizacionService.listarMovimientosPorCliente(clienteSeleccionado.getIdCliente());
             List<Canje> canjes = fidelizacionService.listarCanjesPorCliente(clienteSeleccionado.getIdCliente());
+            List<Pedido> pedidosCliente = pedidoDAO.listarPorCliente(clienteSeleccionado.getIdCliente());
             model.addAttribute("movimientos", movimientos);
             model.addAttribute("canjes", canjes);
+            model.addAttribute("pedidosCliente", pedidosCliente);
         }
 
         return "fidelizacion";

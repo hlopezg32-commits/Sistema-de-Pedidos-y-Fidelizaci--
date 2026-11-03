@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Subnotway Puntos</string>
+    <string name="titulo_app">SUBNOTWAY</string>
+    <string name="subtitulo_app">Pan, Puntos y Premios</string>
+    <string name="titulo_consulta">Consulta tus Puntos</string>
+    <string name="label_identificador">Identificador (NIT o DPI):</string>
+    <string name="hint_identificador">Ej. CL-001 o 12345678-9</string>
+    <string name="btn_consultar">Consultar Saldo</string>
+    <string name="label_servidor">Servidor API:</string>
+    <string name="default_servidor">http://10.0.2.2:8080</string>
+</resources>

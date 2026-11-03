@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subnotway - Terminal de Ventas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .catalogo-scroll {
+            max-height: 520px;
+            overflow-y: auto;
+        }
+        .item-card:hover {
+            border-color: #198754 !important;
+            cursor: pointer;
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+            <i class="bi bi-shop me-2"></i>Subnotway
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/ventas}">Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/productos}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/clientes}">Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/fidelizacion}">Fidelización</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/reportes}">Reportes PDF</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-warning fw-semibold" th:href="@{/movil}">
+                        <i class="bi bi-phone me-1"></i>Celular
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="fw-bold text-success mb-1">
+                <i class="bi bi-cart3 me-2"></i>Terminal de Ventas y Pedidos
+            </h2>
+            <p class="text-muted mb-0">Selección de productos y combos, cálculo de totales, cambio y acumulación automática de puntos</p>
+        </div>
+    </div>
+
+    <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i><span th:text="${mensaje}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i><span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <form id="formVenta" th:action="@{/ventas/guardar}" method="post">
+        <div class="row g-4 mb-4">
+            <div class="col-lg-7">
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-header bg-white py-3">
+                        <ul class="nav nav-pills card-header-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="tab-productos" data-bs-toggle="pill" data-bs-target="#panel-productos" type="button">
+                                    <i class="bi bi-tag me-1"></i>Sándwiches y Bebidas
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab-menus" data-bs-toggle="pill" data-bs-target="#panel-menus" type="button">
+                                    <i class="bi bi-collection me-1"></i>Menús y Combos
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body p-3 catalogo-scroll">
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="panel-productos">
+                                <div class="row g-2">
+                                    <div class="col-md-6" th:each="p : ${productos}">
+                                        <div class="card h-100 border item-card p-2"
+                                             role="button"
+                                             data-tipo="PRODUCTO"
+                                             th:data-id="${p.idProducto}"
+                                             th:data-nombre="${p.nombre}"
+                                             th:data-precio="${p.precio}"
+                                             th:data-stock="${p.existencia}"
+                                             onclick="agregarAlCarritoDesdeElemento(this)">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <span class="badge bg-secondary mb-1" th:text="${p.categoria}"></span>
+                                                    <h6 class="fw-bold mb-1" th:text="${p.nombre}"></h6>
+                                                    <span class="text-muted small" th:text="${p.codigo}"></span>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span class="fs-5 fw-bold text-success d-block" th:text="'Q' + ${#numbers.formatDecimal(p.precio, 1, 2)}"></span>
+                                                    <span th:class="${p.existencia <= 5 ? 'badge bg-danger' : 'badge bg-light text-dark border'}" th:text="'Stock: ' + ${p.existencia}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="panel-menus">
+                                <div class="row g-2">
+                                    <div class="col-md-6" th:each="m : ${menus}">
+                                        <div class="card h-100 border item-card p-2"
+                                             role="button"
+                                             data-tipo="MENU"
+                                             th:data-id="${m.idMenu}"
+                                             th:data-nombre="${m.nombre}"
+                                             th:data-precio="${m.precio}"
+                                             data-stock="999"
+                                             onclick="agregarAlCarritoDesdeElemento(this)">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <span class="badge bg-primary mb-1">COMBO / MENÚ</span>
+                                                    <h6 class="fw-bold mb-1" th:text="${m.nombre}"></h6>
+                                                    <span class="text-muted small" th:text="${m.codigo}"></span>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span class="fs-5 fw-bold text-primary d-block" th:text="'Q' + ${#numbers.formatDecimal(m.precio, 1, 2)}"></span>
+                                                    <span class="badge bg-warning text-dark">+8 Puntos</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="card-title mb-0 fw-bold">
+                            <i class="bi bi-receipt me-2"></i>Resumen de Venta
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="idCliente" class="form-label fw-semibold">Cliente <span class="text-danger">*</span></label>
+                            <select class="form-select" id="idCliente" name="idCliente" required>
+                                <option value="" disabled selected>-- Selecciona un Cliente --</option>
+                                <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.nombre + ' (' + c.identificador + ') - Saldo: ' + c.puntos + ' pts'}"></option>
+                            </select>
+                            <div class="form-text">
+                                ¿No está registrado? <a th:href="@{/clientes/nuevo}" target="_blank">Crear cliente nuevo aquí</a>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mb-3 border rounded" style="max-height: 220px; overflow-y: auto;">
+                            <table class="table table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Artículo</th>
+                                        <th class="text-center" style="width: 80px;">Cant.</th>
+                                        <th class="text-end" style="width: 80px;">Subtotal</th>
+                                        <th style="width: 40px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCarrito">
+                                    <tr id="filaVacia">
+                                        <td colspan="4" class="text-center py-4 text-muted">
+                                            Haz clic en un producto o menú para agregarlo.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="bg-light p-3 rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted">Total a Pagar:</span>
+                                <span class="fs-4 fw-bold text-success" id="labelTotal">Q0.00</span>
+                            </div>
+
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="form-label small fw-semibold">Método de Pago:</label>
+                                    <select class="form-select form-select-sm" id="metodoPago" name="metodoPago" onchange="cambiarMetodoPago()">
+                                        <option value="EFECTIVO" selected>Efectivo</option>
+                                        <option value="TARJETA">Tarjeta</option>
+                                    </select>
+                                </div>
+                                <div class="col-6" id="contenedorMontoRecibido">
+                                    <label class="form-label small fw-semibold">Efectivo Recibido:</label>
+                                    <input type="number" step="0.01" min="0" class="form-control form-select-sm" id="montoRecibido" name="montoRecibido" value="0.00" oninput="calcularCambio()">
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center" id="filaCambio">
+                                <span class="text-muted small">Cambio / Vuelto:</span>
+                                <span class="fw-bold fs-6 text-primary" id="labelCambio">Q0.00</span>
+                            </div>
+
+                            <div class="mt-2">
+                                <input type="text" class="form-control form-control-sm" name="referencia" placeholder="Referencia / No. Comprobante (opcional)">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btnConfirmarVenta" class="btn btn-success btn-lg w-100 fw-bold shadow-sm" disabled>
+                            <i class="bi bi-check2-circle me-1"></i>Confirmar y Cobrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="card shadow-sm border-0 mt-4 mb-5">
+        <div class="card-header bg-white py-3 border-0">
+            <h5 class="fw-bold mb-0 text-secondary">
+                <i class="bi bi-clock-history me-2"></i>Pedidos Recientes
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-3">No. Pedido</th>
+                            <th>ID Cliente</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th class="text-end pe-3">Comprobante</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(pedidosRecientes)}">
+                            <td colspan="6" class="text-center py-3 text-muted">No se registran pedidos recientes.</td>
+                        </tr>
+                        <tr th:each="p : ${pedidosRecientes}">
+                            <td class="ps-3 fw-bold" th:text="'#' + ${p.idPedido}"></td>
+                            <td th:text="'Cliente #' + ${p.idCliente}"></td>
+                            <td th:text="${p.fecha != null ? #temporals.format(p.fecha, 'dd/MM/yyyy HH:mm') : '—'}"></td>
+                            <td class="fw-bold text-success" th:text="'Q' + ${#numbers.formatDecimal(p.total, 1, 2)}"></td>
+                            <td>
+                                <span class="badge" 
+                                      th:classappend="${p.estado == 'PAGADO'} ? 'bg-success' : (${p.estado == 'ENTREGADO'} ? 'bg-primary' : (${p.estado == 'PENDIENTE'} ? 'bg-warning text-dark' : 'bg-secondary'))"
+                                      th:text="${p.estado}">
+                                </span>
+                            </td>
+                            <td class="text-end pe-3">
+                                <a th:href="@{/ventas/comprobante/{id}(id=${p.idPedido})}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-receipt"></i> Ver Ticket
+                                </a>
+                                <form th:if="${p.estado == 'PAGADO'}" th:action="@{/ventas/entregar/{id}(id=${p.idPedido})}" method="post" class="d-inline ms-1">
+                                    <button type="submit" class="btn btn-sm btn-success" title="Marcar como Entregado">
+                                        <i class="bi bi-check2-circle me-1"></i>Entregar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center text-muted py-4">
+    <small>Subnotway &copy; 2026 - Terminal Punto de Venta</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let carrito = [];
+
+    function agregarAlCarritoDesdeElemento(el) {
+        let tipo = el.getAttribute('data-tipo');
+        let id = parseInt(el.getAttribute('data-id'), 10);
+        let nombre = el.getAttribute('data-nombre');
+        let precio = parseFloat(el.getAttribute('data-precio'));
+        let stock = parseInt(el.getAttribute('data-stock'), 10);
+        agregarAlCarrito(tipo, id, nombre, precio, stock);
+    }
+
+    function agregarAlCarrito(tipo, id, nombre, precio, maxStock) {
+        let existente = carrito.find(item => item.tipo === tipo && item.id === id);
+        if (existente) {
+            if (existente.cantidad + 1 > maxStock) {
+                alert("No hay suficiente existencia en inventario.");
+                return;
+            }
+            existente.cantidad += 1;
+        } else {
+            if (maxStock < 1) {
+                alert("Producto agotado.");
+                return;
+            }
+            carrito.push({ tipo: tipo, id: id, nombre: nombre, precio: precio, cantidad: 1, maxStock: maxStock });
+        }
+        actualizarTabla();
+    }
+
+    function cambiarCantidad(index, delta) {
+        let item = carrito[index];
+        let nuevaCant = item.cantidad + delta;
+        if (nuevaCant <= 0) {
+            carrito.splice(index, 1);
+        } else {
+            if (nuevaCant > item.maxStock) {
+                alert("No hay más existencias disponibles.");
+                return;
+            }
+            item.cantidad = nuevaCant;
+        }
+        actualizarTabla();
+    }
+
+    function eliminarItem(index) {
+        carrito.splice(index, 1);
+        actualizarTabla();
+    }
+
+    function actualizarTabla() {
+        let tbody = document.getElementById('tablaCarrito');
+        tbody.innerHTML = '';
+
+        if (carrito.length === 0) {
+            tbody.innerHTML = '<tr id="filaVacia"><td colspan="4" class="text-center py-4 text-muted">Haz clic en un producto o menú para agregarlo.</td></tr>';
+            document.getElementById('labelTotal').innerText = 'Q0.00';
+            document.getElementById('btnConfirmarVenta').disabled = true;
+            calcularCambio();
+            return;
+        }
+
+        let total = 0;
+        carrito.forEach((item, index) => {
+            let subtotal = item.cantidad * item.precio;
+            total += subtotal;
+
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <div class="fw-semibold">${item.nombre}</div>
+                    <small class="text-muted">Q${item.precio.toFixed(2)} c/u</small>
+                    <input type="hidden" name="itemTipo" value="${item.tipo}">
+                    <input type="hidden" name="itemId" value="${item.id}">
+                    <input type="hidden" name="itemCantidad" value="${item.cantidad}">
+                </td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-outline-secondary px-2" onclick="cambiarCantidad(${index}, -1)">-</button>
+                        <span class="btn btn-light disabled px-2">${item.cantidad}</span>
+                        <button type="button" class="btn btn-outline-secondary px-2" onclick="cambiarCantidad(${index}, 1)">+</button>
+                    </div>
+                </td>
+                <td class="text-end fw-bold text-success">Q${subtotal.toFixed(2)}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-sm text-danger" onclick="eliminarItem(${index})"><i class="bi bi-trash"></i></button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('labelTotal').innerText = 'Q' + total.toFixed(2);
+        document.getElementById('btnConfirmarVenta').disabled = false;
+        calcularCambio();
+    }
+
+    function cambiarMetodoPago() {
+        let metodo = document.getElementById('metodoPago').value;
+        let cont = document.getElementById('contenedorMontoRecibido');
+        let filaCambio = document.getElementById('filaCambio');
+        let total = obtenerTotalNumerico();
+
+        if (metodo === 'TARJETA') {
+            cont.style.display = 'none';
+            filaCambio.style.display = 'none';
+            document.getElementById('montoRecibido').value = total.toFixed(2);
+        } else {
+            cont.style.display = 'block';
+            filaCambio.style.display = 'flex';
+            calcularCambio();
+        }
+    }
+
+    function obtenerTotalNumerico() {
+        let total = 0;
+        carrito.forEach(item => total += item.cantidad * item.precio);
+        return total;
+    }
+
+    function calcularCambio() {
+        let total = obtenerTotalNumerico();
+        let recibido = parseFloat(document.getElementById('montoRecibido').value) || 0;
+        let cambio = recibido - total;
+        let lblCambio = document.getElementById('labelCambio');
+
+        if (cambio >= 0) {
+            lblCambio.innerText = 'Q' + cambio.toFixed(2);
+            lblCambio.className = 'fw-bold fs-6 text-primary';
+        } else {
+            lblCambio.innerText = 'Faltan Q' + Math.abs(cambio).toFixed(2);
+            lblCambio.className = 'fw-bold fs-6 text-danger';
+        }
+    }
+</script>
+</body>
+</html>

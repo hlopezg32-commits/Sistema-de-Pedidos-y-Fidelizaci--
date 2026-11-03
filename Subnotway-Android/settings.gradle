@@ -1,0 +1,2 @@
+rootProject.name = "Subnotway-Android"
+include ':app'

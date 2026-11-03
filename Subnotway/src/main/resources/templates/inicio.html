@@ -37,6 +37,11 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/reportes}">Reportes PDF</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-warning fw-semibold" th:href="@{/movil}">
+                        <i class="bi bi-phone me-1"></i>Celular
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -48,24 +53,13 @@
             <h1 class="display-6 fw-bold text-success">
                 <i class="bi bi-shop me-2"></i>Sistema Subnotway
             </h1>
-            <p class="col-md-9 fs-5 text-muted">
+            <p class="col-md-9 fs-5 text-muted mb-0">
                 Plataforma integral de gestión de pedidos, ventas, inventario y programa de fidelización "Pan, Puntos y Premios".
             </p>
-            <div class="d-flex flex-wrap gap-2 pt-2">
-                <a th:href="@{/ventas}" class="btn btn-success btn-lg">
-                    <i class="bi bi-cart3 me-1"></i>Punto de Venta
-                </a>
-                <a th:href="@{/fidelizacion}" class="btn btn-outline-success btn-lg">
-                    <i class="bi bi-award me-1"></i>Fidelización
-                </a>
-                <a th:href="@{/reportes}" class="btn btn-outline-danger btn-lg">
-                    <i class="bi bi-file-earmark-pdf me-1"></i>Reportes PDF
-                </a>
-            </div>
         </div>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
         <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-header bg-success text-white fw-bold">
@@ -108,7 +102,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-header bg-warning text-dark fw-bold">
                     <i class="bi bi-award me-1"></i> Programa de Fidelización
@@ -122,7 +116,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-header bg-danger text-white fw-bold">
                     <i class="bi bi-file-earmark-pdf me-1"></i> Reportes en PDF

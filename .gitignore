@@ -8,3 +8,7 @@ target/
 .project
 .classpath
 *.log
+
+.gradle/
+**/build/
+local.properties

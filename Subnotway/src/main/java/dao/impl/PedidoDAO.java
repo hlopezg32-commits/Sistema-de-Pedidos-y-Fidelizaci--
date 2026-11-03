@@ -68,25 +68,42 @@ public class PedidoDAO implements CrudDAO<Pedido> {
         return false;
     }
 
-@Override
-public boolean eliminar(Pedido pedido) {
-    String sql = "UPDATE pedidos SET estado = 'ANULADO' "
-               + "WHERE id_pedido = ?";
+    @Override
+    public boolean eliminar(Pedido pedido) {
+        String sql = "UPDATE pedidos SET estado = 'ANULADO' "
+                   + "WHERE id_pedido = ?";
 
-    try (Connection conexion = ConexionDB.conectar();
-         PreparedStatement ps = conexion.prepareStatement(sql)) {
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-        ps.setInt(1, pedido.getIdPedido());
+            ps.setInt(1, pedido.getIdPedido());
 
-        return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
 
-    } catch (SQLException e) {
-        System.out.println("Error al anular pedido: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error al anular pedido: " + e.getMessage());
+        }
+
+        return false;
     }
 
-    return false;
-}
+    public boolean cambiarEstado(int idPedido, String nuevoEstado) {
+        String sql = "UPDATE pedidos SET estado = ? WHERE id_pedido = ?";
 
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, nuevoEstado);
+            ps.setInt(2, idPedido);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al cambiar estado del pedido: " + e.getMessage());
+        }
+
+        return false;
+    }
 
     @Override
     public Pedido buscarPorId(int id) {

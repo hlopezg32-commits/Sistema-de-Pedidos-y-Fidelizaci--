@@ -10,4 +10,9 @@ public class HomeController {
     public String inicio() {
         return "inicio";
     }
+
+    @GetMapping({"/movil", "/app"})
+    public String appMovil() {
+        return "movil";
+    }
 }

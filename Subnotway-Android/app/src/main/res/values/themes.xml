@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.Subnotway" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/verde_primario</item>
+        <item name="colorPrimaryVariant">@color/verde_oscuro</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="android:statusBarColor">@color/verde_oscuro</item>
+    </style>
+</resources>

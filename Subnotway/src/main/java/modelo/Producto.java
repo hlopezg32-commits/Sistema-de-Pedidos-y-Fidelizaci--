@@ -1,4 +1,3 @@
-
 package modelo;
 
 public class Producto {
@@ -10,6 +9,9 @@ public class Producto {
     private double precio;
     private int existencia;
     private String estado;
+
+    public Producto() {
+    }
 
     public Producto(int idProducto, String codigo, String nombre,
             String categoria, double precio, int existencia, String estado) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde_primario">#008938</color>
+    <color name="verde_oscuro">#006328</color>
+    <color name="amarillo_puntos">#FFC107</color>
+    <color name="fondo">#F4F6F8</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="texto_oscuro">#212529</color>
+    <color name="texto_secundario">#6C757D</color>
+    <color name="rojo_alerta">#DC3545</color>
+</resources>
