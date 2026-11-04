@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Maestra para la Defensa del Proyecto — Subnotway</title>
+<style>
+  :root {
+    --primary: #008938;
+    --primary-dark: #006027;
+    --primary-light: #e8f5e9;
+    --accent: #ffc220;
+    --accent-dark: #d49b00;
+    --dark: #0f172a;
+    --dark-muted: #334155;
+    --light: #f8fafc;
+    --border: #e2e8f0;
+    --card-bg: #ffffff;
+    --code-bg: #1e293b;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    color: var(--dark);
+    background-color: #ffffff;
+    line-height: 1.55;
+    font-size: 10.5pt;
+  }
+
+  @page {
+    size: letter portrait;
+    margin: 14mm 14mm 14mm 14mm;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+    .no-break {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+  }
+
+  /* Header / Cover banner */
+  .cover-header {
+    background: linear-gradient(135deg, #008938 0%, #004d1f 100%);
+    color: white;
+    padding: 24px 28px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 12px rgba(0, 137, 56, 0.15);
+  }
+  .cover-header .top-meta {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .cover-header h1 {
+    font-size: 20pt;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .cover-header .subtitle {
+    font-size: 11pt;
+    font-weight: 400;
+    color: #e2e8f0;
+    margin-bottom: 14px;
+  }
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .badge {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .badge-accent {
+    background: var(--accent);
+    color: #1e293b;
+    border: none;
+    font-weight: 700;
+  }
+
+  /* Headings */
+  h2 {
+    font-size: 13.5pt;
+    font-weight: 700;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 4px;
+    margin-top: 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    break-after: avoid;
+  }
+  h2 .num {
+    background: var(--primary);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9.5pt;
+    margin-right: 8px;
+  }
+
+  h3 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--dark);
+    margin-top: 14px;
+    margin-bottom: 6px;
+    break-after: avoid;
+  }
+
+  h4 {
+    font-size: 10pt;
+    font-weight: 700;
+    color: var(--dark-muted);
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin-bottom: 8px;
+    color: var(--dark-muted);
+  }
+
+  /* Callouts & Quotes */
+  .callout-pitch {
+    background: #f0fdf4;
+    border-left: 4px solid var(--primary);
+    padding: 12px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 9.5pt;
+    font-style: italic;
+    color: #166534;
+    margin-bottom: 14px;
+  }
+
+  .alert-card {
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-left: 4px solid var(--accent-dark);
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 9pt;
+    margin-bottom: 10px;
+  }
+
+  /* Grid Layouts */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .module-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .module-card .title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .module-card p {
+    font-size: 8.5pt;
+    margin-bottom: 0;
+    line-height: 1.4;
+  }
+
+  /* Architecture Diagram (CSS-based) */
+  .arch-diagram {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+  .arch-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .arch-layer-title {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--dark-muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .arch-box {
+    flex: 1;
+    background: white;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 6px 8px;
+    text-align: center;
+    font-size: 8pt;
+    font-weight: 600;
+  }
+  .arch-box.client { border-color: #3b82f6; background: #eff6ff; color: #1e40af; }
+  .arch-box.controller { border-color: #8b5cf6; background: #f5f3ff; color: #5b21b6; }
+  .arch-box.service { border-color: #10b981; background: #ecfdf5; color: #065f46; }
+  .arch-box.dao { border-color: #f59e0b; background: #fffbeb; color: #92400e; }
+  .arch-box.db { border-color: #ef4444; background: #fef2f2; color: #991b1b; }
+  .arch-connector {
+    text-align: center;
+    font-size: 10pt;
+    color: #94a3b8;
+    line-height: 1;
+    margin: 2px 0 6px 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 14px;
+    font-size: 8.5pt;
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 6px 8px;
+    border: 1px solid var(--primary-dark);
+  }
+  td {
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    color: var(--dark-muted);
+  }
+  tr:nth-child(even) {
+    background: #f8fafc;
+  }
+  .text-center { text-align: center; }
+  .badge-status {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    font-weight: 700;
+  }
+  .status-active { background: #dcfce7; color: #166534; }
+  .status-inactive { background: #fee2e2; color: #991b1b; }
+
+  /* Code snippet block */
+  pre {
+    background: var(--code-bg);
+    color: #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 7.8pt;
+    line-height: 1.45;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+    border: 1px solid #334155;
+  }
+  code {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 8.5pt;
+    color: #0f766e;
+    background: #f0fdfa;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  pre code {
+    color: inherit;
+    background: transparent;
+    padding: 0;
+  }
+  .kw { color: #f43f5e; font-weight: 600; }
+  .fn { color: #38bdf8; }
+  .str { color: #a3e635; }
+  .cmt { color: #94a3b8; font-style: italic; }
+
+  /* Q&A Cards */
+  .qa-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+  .qa-card .question {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #b45309;
+    margin-bottom: 4px;
+  }
+  .qa-card .answer {
+    font-size: 8.5pt;
+    color: var(--dark-muted);
+    line-height: 1.45;
+  }
+
+  /* Step guide */
+  .step-box {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .step-num {
+    background: var(--primary);
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 10pt;
+    flex-shrink: 0;
+  }
+  .step-content {
+    flex: 1;
+  }
+  .step-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .step-desc {
+    font-size: 8.5pt;
+    color: var(--dark-muted);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+  <!-- COVER HEADER -->
+  <div class="cover-header">
+    <div class="top-meta">Universidad Mariano Gálvez de Guatemala — Programación II</div>
+    <h1>Subnotway: Pan, Puntos y Premios</h1>
+    <div class="subtitle">Guía Técnica Integral para la Defensa y Presentación del Proyecto</div>
+    <div class="tech-badges">
+      <span class="badge badge-accent">Spring Boot 3.4</span>
+      <span class="badge">Java 17+</span>
+      <span class="badge">MySQL (InnoDB)</span>
+      <span class="badge">OpenPDF</span>
+      <span class="badge">Android Nativo (Java)</span>
+      <span class="badge">Thymeleaf</span>
+      <span class="badge">Bootstrap 5</span>
+      <span class="badge">REST API</span>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: RESUMEN EJECUTIVO -->
+  <h2><span class="num">1</span> Resumen Ejecutivo (El "Elevator Pitch")</h2>
+  
+  <div class="callout-pitch">
+    "Subnotway es una solución tecnológica integral orientada a optimizar la operación comercial y de inventarios de un restaurante de comida rápida, complementada con un sistema de lealtad y retención de clientes. Consta de dos componentes clave totalmente desacoplados: una <strong>plataforma web administrativa y de punto de venta (POS)</strong> construida sobre Spring Boot y Thymeleaf, y una <strong>aplicación móvil Android nativa</strong> que permite a los clientes consultar su saldo de puntos en tiempo real a través de una API REST segura con persistencia transaccional en MySQL."
+  </div>
+
+  <div class="grid-3 no-break">
+    <div class="module-card">
+      <div class="title">1. Terminal POS</div>
+      <p>Toma de pedidos reactiva con catálogo, control de cambio, acumulación automática de puntos y estados (<code>PAGADO</code> &rarr; <code>ENTREGADO</code>).</p>
+    </div>
+    <div class="module-card">
+      <div class="title">2. Inventario y Kardex</div>
+      <p>Control de 29 productos oficiales, alertas visuales de stock crítico (&le; 5 unidades) y registro de auditoría de movimientos.</p>
+    </div>
+    <div class="module-card">
+      <div class="title">3. Directorio de Clientes</div>
+      <p>Gestión completa con soporte para identificación guatemalteca auténtica (NIT con/sin guion o DPI de 13 dígitos).</p>
+    </div>
+    <div class="module-card">
+      <div class="title">4. Fidelización y Canjes</div>
+      <p>Consulta de saldo, historial de compras y canje atómico de premios (10, 15, 30 y 50 pts) con validación estricta de stock.</p>
+    </div>
+    <div class="module-card">
+      <div class="title">5. Centro de Reportes PDF</div>
+      <p>Generación en memoria mediante OpenPDF de 6 reportes gerenciales con filtros de fecha dinámicos y cero residuos en disco.</p>
+    </div>
+    <div class="module-card">
+      <div class="title">6. Componente Móvil Android</div>
+      <p>App nativa desacoplada que consulta saldo en vivo mediante peticiones REST multihilo sin bloquear la interfaz de usuario.</p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: ARQUITECTURA DE SOFTWARE -->
+  <div class="no-break">
+    <h2><span class="num">2</span> Arquitectura de Software y Patrones de Diseño</h2>
+    
+    <div class="arch-diagram">
+      <div class="arch-layer-title">Capa de Presentación y Clientes</div>
+      <div class="arch-row">
+        <div class="arch-box client">Navegador Web (Thymeleaf + Bootstrap 5)</div>
+        <div class="arch-box client">App Móvil Android (Native Java + Material Design)</div>
+      </div>
+      <div class="arch-connector">&darr; HTTP GET / POST (HTML) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &darr; HTTP GET (JSON REST)</div>
+      
+      <div class="arch-layer-title">Capa Controladora (Presentation Controllers & REST API)</div>
+      <div class="arch-row">
+        <div class="arch-box controller">VentaController, ClienteController, FidelizacionController, ReporteController</div>
+        <div class="arch-box controller">ClienteApiController (@RestController / JSON)</div>
+      </div>
+      <div class="arch-connector">&darr; Inyección de Dependencias (@Autowired / Servicios)</div>
+
+      <div class="arch-layer-title">Capa de Negocio (Service Layer)</div>
+      <div class="arch-row">
+        <div class="arch-box service">VentaServicio (Cálculo Totales, Stock, Estados)</div>
+        <div class="arch-box service">FidelizacionService (Fórmula Puntos, Canjes)</div>
+        <div class="arch-box service">ReportePdfService (OpenPDF en Memoria)</div>
+      </div>
+      <div class="arch-connector">&darr; Llamadas a Interfaces DAO</div>
+
+      <div class="arch-layer-title">Capa de Acceso a Datos (DAO Layer & Connection Pool)</div>
+      <div class="arch-row">
+        <div class="arch-box dao">ClienteDAO, ProductoDAO, PedidoDAO, MenuDAO, RecompensaDAO, CanjeDAO, ReporteDAO</div>
+        <div class="arch-box dao">ConexionDB (HikariCP / JDBC Connection Pool)</div>
+      </div>
+      <div class="arch-connector">&darr; Conexión TCP / Consultas SQL Parametrizadas (PreparedStatement)</div>
+
+      <div class="arch-layer-title">Motor de Persistencia Relacional</div>
+      <div class="arch-row">
+        <div class="arch-box db">MySQL Server 8.0 / MariaDB &mdash; Base de Datos: pan_puntos_premios (Motor InnoDB, ACID)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 no-break">
+    <div>
+      <h3>Patrones de Diseño Implementados:</h3>
+      <ul style="font-size: 8.5pt; color: var(--dark-muted); padding-left: 18px; line-height: 1.5;">
+        <li><strong>MVC (Modelo-Vista-Controlador):</strong> Separación absoluta entre vistas HTML, lógica de control y modelos de dominio.</li>
+        <li><strong>DAO (Data Access Object):</strong> Encapsula todas las sentencias SQL y la conectividad JDBC. Si cambia la base de datos, los servicios no sufren cambios.</li>
+        <li><strong>Service Layer:</strong> Controladores ligeros (<em>Thin Controllers</em>) que delegan la lógica transaccional a servicios especializados.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Principios y Buenas Prácticas:</h3>
+      <ul style="font-size: 8.5pt; color: var(--dark-muted); padding-left: 18px; line-height: 1.5;">
+        <li><strong>REST (Representational State Transfer):</strong> Endpoints sin estado (<em>stateless</em>) que devuelven JSON estándar consumible por cualquier cliente.</li>
+        <li><strong>Concurrencia Multihilo (Android):</strong> Red ejecutada en <code>ExecutorService</code> y renderizado en UI mediante <code>Handler(Looper.getMainLooper())</code>.</li>
+        <li><strong>DTO (Data Transfer Object):</strong> <code>ItemPedidoDTO</code> transfiere las líneas del carrito evitando sobrecargar entidades.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECCIÓN 3: EXPLICACIÓN DEL CÓDIGO SECCIÓN POR SECCIÓN -->
+  <h2><span class="num">3</span> Explicación del Código Fuente Sección por Sección</h2>
+
+  <!-- A. VENTAS Y POS -->
+  <div class="no-break">
+    <h3>A. Módulo de Ventas y Punto de Venta (POS)</h3>
+    <p><strong>Ubicación:</strong> <code>controlador/VentaController.java</code> | <code>servicio/VentaServicio.java</code> | <code>dao/impl/PedidoDAO.java</code></p>
+    
+    <div class="step-box">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Recepción de Datos y Parsing DTO:</div>
+        <div class="step-desc">El navegador envía por <code>POST /ventas/procesar</code> los datos del cliente, método de pago (<code>EFECTIVO</code> / <code>TARJETA</code>), monto recibido y un payload JSON con las líneas del carrito. En <code>VentaServicio.procesarVenta</code> se deserializa en objetos <code>ItemPedidoDTO</code>.</div>
+      </div>
+    </div>
+    
+    <div class="step-box">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Validaciones Financieras y Descuento de Stock:</div>
+        <div class="step-desc">Se valida que <code>montoRecibido &ge; total</code> y se calcula <code>cambio = montoRecibido - total</code>. Se descuenta el stock físico con <code>productoDAO.descontarStock</code>. Si el ítem es un combo, se consultan sus componentes en <code>menu_componentes</code> y se descuenta individualmente cada ingrediente.</div>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Persistencia Transaccional y Auditoría:</div>
+        <div class="step-desc">Se inserta el pedido con estado <code>'PAGADO'</code>, se guardan los detalles en <code>pedido_detalles</code>, el registro contable en <code>pagos</code>, se calcula la bonificación de puntos al cliente y se registran auditorías en <code>movimientos_puntos</code> y <code>movimientos_inventario</code>.</div>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Transición de Entrega:</div>
+        <div class="step-desc">Cuando el pedido es preparado y entregado, el operario hace clic en "Entregar" ejecutando <code>POST /ventas/entregar/{id}</code>, lo que actualiza el estado a <code>'ENTREGADO'</code> en la base de datos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. FIDELIZACIÓN -->
+  <div class="no-break" style="margin-top: 14px;">
+    <h3>B. Módulo de Fidelización y Canje Atómico de Premios</h3>
+    <p><strong>Ubicación:</strong> <code>controlador/FidelizacionController.java</code> | <code>servicio/FidelizacionService.java</code> | <code>dao/impl/RecompensaDAO.java</code></p>
+    
+    <p><strong>1. Fórmula Oficial de Puntos:</strong></p>
+    <pre><code><span class="kw">public int</span> <span class="fn">calcularPuntos</span>(<span class="kw">int</span> sandwiches, <span class="kw">int</span> menus) {
+    <span class="kw">return</span> (sandwiches * 2) + (menus * 8);
+}</code></pre>
+    <p style="font-size: 8.5pt;">Cada sándwich individual otorga <strong>2 puntos</strong> y cada menú/combo completo otorga <strong>8 puntos</strong> (estrategia de negocio para incentivar ventas de mayor margen).</p>
+
+    <p><strong>2. Transacción de Canje en Cascada:</strong> En <code>FidelizacionService.procesarCanje(idCliente, idRecompensa)</code> se realizan 5 validaciones rigurosas antes de alterar cualquier tabla:</p>
+    <ol style="font-size: 8.5pt; color: var(--dark-muted); padding-left: 20px; line-height: 1.45;">
+      <li><strong>Cliente Activo:</strong> Valida que el cliente exista y su estado sea <code>'ACTIVO'</code> (rechaza a clientes inactivos como Consumidor Final).</li>
+      <li><strong>Recompensa Activa:</strong> Valida que el premio solicitado esté habilitado en el catálogo.</li>
+      <li><strong>Saldo Suficiente:</strong> Valida que <code>cliente.getPuntos() &ge; recompensa.getCostoPuntos()</code>.</li>
+      <li><strong>Stock Físico Garantizado:</strong> Verifica que haya existencias disponibles del producto o de los componentes del combo.</li>
+      <li><strong>Descuento Atómico:</strong> Descuenta los puntos al cliente, descuenta el inventario y genera el registro en <code>canjes</code> y auditorías correspondientes.</li>
+    </ol>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- C. REPORTES PDF OPENPDF -->
+  <div class="no-break">
+    <h3>C. Centro de Reportes PDF con OpenPDF (In-Memory Streaming)</h3>
+    <p><strong>Ubicación:</strong> <code>controlador/ReporteController.java</code> | <code>servicio/ReportePdfService.java</code> | <code>dao/impl/ReporteDAO.java</code></p>
+
+    <p><strong>¿Cómo se genera el archivo PDF sin guardarlo en el disco duro?</strong></p>
+    <ol style="font-size: 8.5pt; color: var(--dark-muted); padding-left: 20px; line-height: 1.45;">
+      <li>El controlador define los encabezados HTTP: <code>Content-Type: application/pdf</code> y <code>Content-Disposition: inline; filename=Reporte.pdf</code>.</li>
+      <li>Pasa el flujo de salida del servlet <code>response.getOutputStream()</code> directamente a OpenPDF.</li>
+      <li><code>ReportePdfService</code> inicializa un <code>Document(PageSize.A4, 36, 36, 36, 36)</code> y conecta <code>PdfWriter.getInstance(document, outputStream)</code>.</li>
+      <li>Aplica tablas <code>PdfPTable</code> con celdas estilizadas, encabezados verde institucional (<code>#008938</code>) y <em>Zebra Striping</em> (filas intercaladas).</li>
+      <li>Al invocarse <code>document.close()</code>, el archivo binario viaja en tiempo real hacia el navegador del cliente. Cero consumo de disco y mínima huella en memoria RAM.</li>
+    </ol>
+
+    <p style="margin-top: 8px;"><strong>Consulta Relacional Avanzada con <code>UNION ALL</code> (Productos Más Vendidos):</strong></p>
+    <pre><code><span class="kw">SELECT</span> prod.codigo, prod.nombre, prod.categoria, <span class="fn">SUM</span>(t.unidades) <span class="kw">AS</span> total_unidades
+<span class="kw">FROM</span> (
+    <span class="cmt">-- 1. Unidades vendidas de forma individual</span>
+    <span class="kw">SELECT</span> pd.id_producto, pd.cantidad <span class="kw">AS</span> unidades
+    <span class="kw">FROM</span> pedido_detalles pd <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> pd.id_pedido = p.id_pedido
+    <span class="kw">WHERE</span> pd.id_producto <span class="kw">IS NOT NULL AND</span> p.estado <span class="kw">IN</span> (<span class="str">'PAGADO'</span>, <span class="str">'ENTREGADO'</span>, <span class="str">'COMPLETADO'</span>)
+    
+    <span class="kw">UNION ALL</span>
+    
+    <span class="cmt">-- 2. Unidades consumidas dentro de combos (multiplicando combos x componentes)</span>
+    <span class="kw">SELECT</span> mc.id_producto, (pd.cantidad * mc.cantidad) <span class="kw">AS</span> unidades
+    <span class="kw">FROM</span> pedido_detalles pd <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> pd.id_pedido = p.id_pedido
+    <span class="kw">JOIN</span> menu_componentes mc <span class="kw">ON</span> pd.id_menu = mc.id_menu
+    <span class="kw">WHERE</span> pd.id_menu <span class="kw">IS NOT NULL AND</span> p.estado <span class="kw">IN</span> (<span class="str">'PAGADO'</span>, <span class="str">'ENTREGADO'</span>, <span class="str">'COMPLETADO'</span>)
+) t
+<span class="kw">JOIN</span> productos prod <span class="kw">ON</span> t.id_producto = prod.id_producto
+<span class="kw">GROUP BY</span> prod.id_producto, prod.codigo, prod.nombre, prod.categoria
+<span class="kw">ORDER BY</span> total_unidades <span class="kw">DESC</span>;</code></pre>
+  </div>
+
+  <!-- D. ANDROID -->
+  <div class="no-break" style="margin-top: 14px;">
+    <h3>D. Aplicación Móvil Android Nativa (Java)</h3>
+    <p><strong>Ubicación:</strong> <code>MainActivity.java</code> | <code>res/layout/activity_main.xml</code> | <code>AndroidManifest.xml</code></p>
+    
+    <p><strong>¿Cómo funciona la asincronía y por qué es fundamental?</strong></p>
+    <ul style="font-size: 8.5pt; color: var(--dark-muted); padding-left: 20px; line-height: 1.45;">
+      <li><strong>Worker Thread (ExecutorService):</strong> En Android es una regla obligatoria no ejecutar operaciones de red en el hilo principal para evitar el error fatal <code>NetworkOnMainThreadException</code>. Se envía la solicitud HTTP hacia <code>http://10.0.2.2:8080/api/clientes/puntos/{identificador}</code> mediante un hilo en segundo plano.</li>
+      <li><strong>UI Thread (Handler con Looper.getMainLooper):</strong> Una vez recibida la cadena JSON y parseada con <code>JSONObject</code>, se delega la actualización visual a la cola del hilo principal mediante <code>mainHandler.post(() -> { ... })</code>, garantizando una interfaz fluida sin bloqueos.</li>
+    </ul>
+  </div>
+
+  <!-- E. SEGURIDAD JDBC -->
+  <div class="no-break" style="margin-top: 14px;">
+    <h3>E. Capa de Persistencia y Seguridad (JDBC DAO)</h3>
+    <ul style="font-size: 8.5pt; color: var(--dark-muted); padding-left: 20px; line-height: 1.45;">
+      <li><strong>Mitigación de SQL Injection:</strong> El 100% de las consultas utilizan <code>PreparedStatement</code> con parámetros tipificados (<code>setString</code>, <code>setInt</code>, <code>setTimestamp</code>). El motor compila la estructura de la consulta antes de enlazar datos, eliminando cualquier riesgo de inyección.</li>
+      <li><strong>Búsqueda Inteligente de Clientes:</strong> <code>ClienteDAO.buscarPorIdentificador</code> normaliza las entradas permitiendo buscar por NIT con guion (<code>87654321-0</code>), NIT sin guion (<code>876543210</code>), DPI de 13 dígitos (<code>2548123450101</code>) o ID numérico/código legado (<code>CL-002</code>).</li>
+    </ul>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECCIÓN 4: DIRECTORIO OFICIAL DE CLIENTES -->
+  <div class="no-break">
+    <h2><span class="num">4</span> Directorio Oficial de Clientes (NIT y DPI)</h2>
+    <p style="font-size: 8.5pt; margin-bottom: 8px;">Tabla de datos precargados para demostración durante la evaluación:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 35px;">ID</th>
+          <th style="width: 120px;">NIT / DPI</th>
+          <th>Nombre del Cliente</th>
+          <th class="text-center" style="width: 70px;">Puntos</th>
+          <th class="text-center" style="width: 75px;">Estado</th>
+          <th>Caso de Uso para Demostración</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center"><strong>1</strong></td>
+          <td><code>12345678-9</code></td>
+          <td><strong>Juan Carlos Pérez</strong></td>
+          <td class="text-center"><strong>1,316</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Cliente VIP con puntos acumulados suficientes para probar canjes en vivo.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>2</strong></td>
+          <td><code>87654321-0</code></td>
+          <td><strong>María Fernanda Gómez</strong></td>
+          <td class="text-center"><strong>240</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td><em>(Reemplazo de CL-002)</em>. Cliente frecuente; ideal para consulta en Android.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>3</strong></td>
+          <td><code>2548123450101</code></td>
+          <td><strong>Carlos Eduardo López</strong></td>
+          <td class="text-center"><strong>85</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Demostración de búsqueda por <strong>DPI (13 dígitos)</strong>.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>4</strong></td>
+          <td><code>45678912-3</code></td>
+          <td><strong>Ana Lucía Morales</strong></td>
+          <td class="text-center"><strong>52</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Umbral exacto para canjear <strong>Menú Completo (50 pts)</strong>.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>5</strong></td>
+          <td><code>1892345670101</code></td>
+          <td><strong>Roberto Alejandro Soto</strong></td>
+          <td class="text-center"><strong>38</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Umbral exacto para canjear <strong>Sándwich (30 pts)</strong>.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>6</strong></td>
+          <td><code>98765432-1</code></td>
+          <td><strong>Sofía Isabel Martínez</strong></td>
+          <td class="text-center"><strong>18</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Umbral exacto para canjear <strong>Acompañamiento (15 pts)</strong>.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>7</strong></td>
+          <td><code>3012456780101</code></td>
+          <td><strong>Diego Fernando Castillo</strong></td>
+          <td class="text-center"><strong>12</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Umbral exacto para canjear <strong>Bebida Gratuita (10 pts)</strong>.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>8</strong></td>
+          <td><code>54321678-K</code></td>
+          <td><strong>Jimena Alejandra Valdez</strong></td>
+          <td class="text-center"><strong>0</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Demuestra validación de <strong>saldo insuficiente</strong> en canje.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>9</strong></td>
+          <td><code>2145678900101</code></td>
+          <td><strong>César Augusto Ramírez</strong></td>
+          <td class="text-center"><strong>320</strong></td>
+          <td class="text-center"><span class="badge-status status-active">ACTIVO</span></td>
+          <td>Cliente corporativo con saldo intermedio.</td>
+        </tr>
+        <tr>
+          <td class="text-center"><strong>10</strong></td>
+          <td><code>CF</code></td>
+          <td><strong>Consumidor Final</strong></td>
+          <td class="text-center"><strong>0</strong></td>
+          <td class="text-center"><span class="badge-status status-inactive">INACTIVO</span></td>
+          <td>Demuestra validación de <strong>cliente inactivo</strong> para fidelización.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 5: PREGUNTAS TRAMPA -->
+  <div class="no-break" style="margin-top: 14px;">
+    <h2><span class="num">5</span> Preguntas "Trampa" de Catedráticos y Respuestas Ideales</h2>
+
+    <div class="qa-card">
+      <div class="question">P1: "¿Por qué la aplicación móvil no se conecta directamente a MySQL con JDBC?"</div>
+      <div class="answer"><strong>Respuesta Técnica:</strong> Conectar una app móvil directamente a la base de datos es una grave vulnerabilidad de seguridad. Requeriría incluir credenciales de MySQL dentro de un APK descompilable, obligaría a abrir el puerto 3306 a internet exponiendo la base de datos a ataques externos, y saturaría el pool de conexiones. Al usar una <strong>API REST intermedia</strong>, desacoplamos la aplicación cliente, centralizamos la autenticación y validamos todas las reglas de negocio en el backend.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="question">P2: "¿Dónde reside la lógica de negocio: en la base de datos, en el controlador o en el servicio?"</div>
+      <div class="answer"><strong>Respuesta Técnica:</strong> En la <strong>capa de servicio (<code>FidelizacionService</code>, <code>VentaServicio</code>, <code>ReportePdfService</code>)</strong>. Los controladores son delgados (<em>Thin Controllers</em>) y únicamente gestionan peticiones HTTP. Tampoco sobrecargamos la base de datos con stored procedures complejos para preservar la testeabilidad unitaria en Java y mantener la independencia del motor SQL.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="question">P3: "¿Qué sucede si dos usuarios intentan canjear puntos simultáneamente?"</div>
+      <div class="answer"><strong>Respuesta Técnica:</strong> El motor de almacenamiento <strong>InnoDB</strong> implementa bloqueo a nivel de fila (<em>Row-Level Locking</em>) y transacciones con propiedades ACID. En la capa de servicio se realiza una validación atómica de saldo y existencias antes de la modificación física, garantizando la consistencia del saldo.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="question">P4: "¿Por qué usar OpenPDF en lugar de iText antiguo o librerías de terceros pesadas?"</div>
+      <div class="answer"><strong>Respuesta Técnica:</strong> OpenPDF es una bifurcación moderna de código abierto bajo licencias LGPL y MPL, libre de las restricciones y costos comerciales de iText 7. Se integra nativamente con Spring Boot 3 y Java 17+, permitiendo escribir el documento binario directamente sobre el <code>OutputStream</code> del servlet sin escribir archivos temporales en el disco.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="question">P5: "¿Qué significa la dirección 10.0.2.2 configurada en la aplicación Android?"</div>
+      <div class="answer"><strong>Respuesta Técnica:</strong> Es el alias de loopback especial provisto por el emulador de Android. Dentro de la máquina virtual del emulador, <code>127.0.0.1</code> apunta a sí mismo; para alcanzar el <code>localhost</code> de la máquina anfitriona (donde corre Spring Boot en el puerto 8080), se debe emplear <code>10.0.2.2</code>.</div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECCIÓN 6: GUÍA PASO A PASO PARA DEMOSTRACIÓN EN VIVO -->
+  <div class="no-break">
+    <h2><span class="num">6</span> Guía Paso a Paso para la Demostración en Vivo (Demo)</h2>
+    <p style="font-size: 8.5pt; margin-bottom: 10px;">Sigue este orden secuencial durante la defensa para lograr el máximo impacto técnico y visual:</p>
+
+    <div class="step-box">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Terminal de Ventas POS (/ventas):</div>
+        <div class="step-desc">
+          &bull; Selecciona al cliente <strong>Juan Carlos Pérez</strong> (<code>12345678-9</code>).<br>
+          &bull; Agrega <strong>1 Combo 1</strong> (Q 230.00) y <strong>1 Sándwich de Ensalada de Atún</strong> (Q 75.00).<br>
+          &bull; Ingresa un monto de pago de <strong>Q 350.00</strong> en efectivo y presiona <strong>Cobrar</strong>.<br>
+          &bull; Señala cómo el sistema calcula el cambio exacto (<strong>Q 45.00</strong>) y acumula <strong>+10 puntos</strong> (8 por el combo + 2 por el sándwich).<br>
+          &bull; Presiona <strong>Entregar</strong> para evidenciar la transición de estado (<code>PAGADO</code> &rarr; <code>ENTREGADO</code>).
+        </div>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Consulta Móvil en Android (Emulador o Dispositivo):</div>
+        <div class="step-desc">
+          &bull; Abre la aplicación móvil Subnotway.<br>
+          &bull; Digita el NIT de Juan Carlos: <code>12345678-9</code> y presiona <strong>Consultar Saldo</strong>.<br>
+          &bull; Demuestra cómo los puntos acumulados en la venta recién efectuada se reflejan al instante vía REST API.<br>
+          &bull; Digita también el NIT de María Fernanda: <code>87654321-0</code> (240 pts) para evidenciar la reactividad de la consulta.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Módulo de Fidelización Web (/fidelizacion):</div>
+        <div class="step-desc">
+          &bull; Busca al cliente Juan Carlos Pérez o Carlos Eduardo López.<br>
+          &bull; Ejecuta el canje de una recompensa (ej. "Bebida Gratuita" por 10 puntos).<br>
+          &bull; Muestra cómo se descuentan los 10 puntos del saldo del cliente, se descuenta 1 unidad del inventario físico y se inserta la transacción en la tabla histórica de canjes.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Centro de Reportes PDF (/reportes):</div>
+        <div class="step-desc">
+          &bull; <strong>Ventas por Período:</strong> Selecciona el rango del día actual para descargar el PDF con las ventas recién registradas.<br>
+          &bull; <strong>Stock Crítico / Bajo:</strong> Abre el reporte para mostrar los 5 productos con alertas de stock (Monster rosa en 0, Pork Jhon en 2 unidades).<br>
+          &bull; <strong>Productos Más Vendidos:</strong> Demuestra el PDF donde se aprecian tanto los productos directos como los ingredientes desagregados de combos mediante la consulta SQL <code>UNION ALL</code>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-card" style="margin-top: 15px; text-align: center;">
+    <strong>¡Proyecto 100% Listo y Verificado!</strong> Universidad Mariano Gálvez de Guatemala &bull; Facultad de Ingeniería en Sistemas.
+  </div>
+
+</body>
+</html>
