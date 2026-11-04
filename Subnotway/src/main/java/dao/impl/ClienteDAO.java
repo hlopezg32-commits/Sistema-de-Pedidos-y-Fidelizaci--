@@ -135,17 +135,40 @@ public class ClienteDAO implements CrudDAO<Cliente> {
     }
 
     public Cliente buscarPorIdentificador(String identificador) {
+        if (identificador == null || identificador.trim().isEmpty()) {
+            return null;
+        }
+
+        String limpio = identificador.trim().replace("-", "").replace(" ", "");
+        int idInt = -1;
+        if (limpio.matches("(?i)^cl0*\\d+$")) {
+            try {
+                idInt = Integer.parseInt(limpio.replaceAll("(?i)^cl0*", ""));
+            } catch (NumberFormatException ignored) {
+            }
+        } else if (limpio.matches("^\\d{1,6}$")) {
+            try {
+                idInt = Integer.parseInt(limpio);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
         String sql = """
             SELECT id_cliente, identificador, nombre, telefono,
                    correo, puntos, estado
             FROM clientes
             WHERE identificador = ?
+               OR REPLACE(REPLACE(identificador, '-', ''), ' ', '') = ?
+               OR id_cliente = ?
+            LIMIT 1
             """;
 
         try (Connection conexion = ConexionDB.conectar();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-            ps.setString(1, identificador);
+            ps.setString(1, identificador.trim());
+            ps.setString(2, limpio);
+            ps.setInt(3, idInt);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -160,7 +183,6 @@ public class ClienteDAO implements CrudDAO<Cliente> {
                     "No se pudo buscar el cliente por identificador.", e);
         }
     }
-
     @Override
     public List<Cliente> listarTodos() {
         String sql = """

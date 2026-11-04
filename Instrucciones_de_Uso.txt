@@ -62,7 +62,7 @@ PASO 3: APLICACION MOVIL (Subnotway-Android)
 4. Conecta tu celular por USB (con depuracion activa) o inicia un emulador de Android Studio.
 5. Haz clic en 'Run' (boton verde de Play).
 6. En la aplicacion:
-   - Ingresa el identificador de un cliente (ej. CL-001 o el NIT 12345678-9).
+   - Ingresa el identificador de un cliente: NIT 12345678-9 (o CL-001) para Juan Carlos Perez, o NIT 87654321-0 (antes CL-002) para Maria Fernanda Gomez, o DPI 2548123450101 para Carlos Lopez.
    - Haz clic en 'Consultar Saldo'.
    - La app mostrara el nombre, el saldo acumulado de puntos y el estado del cliente en tiempo real.
 

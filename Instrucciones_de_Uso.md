@@ -72,7 +72,7 @@ Una vez iniciado el servidor, abre tu navegador web en:
 4. Conecta un dispositivo físico con depuración USB activada o inicia un Emulador (ej. Pixel 6 / API 34).
 5. Haz clic en el botón verde **Run 'app'** (icono de Play).
 6. Una vez abierta la app en el dispositivo:
-   - Ingresa un identificador de prueba: `CL-001` (o el NIT `12345678-9`).
+   - Ingresa un identificador de prueba: NIT `12345678-9` (o `CL-001`) para Juan Carlos Pérez, o NIT `87654321-0` (antes `CL-002`) para María Fernanda Gómez.
    - Presiona el botón **Consultar Saldo**.
    - La aplicación mostrará el nombre del cliente, su estado (`ACTIVO`) y su balance de puntos en tiempo real.
 
@@ -109,7 +109,24 @@ El sistema cuenta con datos precargados a lo largo del tiempo para demostrar el 
 
 ### 4. Reporte de Puntos Acumulados por Cliente
 - Muestra el listado de los 10 clientes clasificados en orden descendente por puntos.
-- Permite evidenciar clientes frecuentes (`CL-001` con 1316 pts, `CL-009` con 320 pts, `CL-002` con 240 pts) y clientes nuevos o sin puntos (`CL-008` y `CL-010`).
+- Permite evidenciar clientes frecuentes: Juan Carlos Pérez (NIT `12345678-9` con 1316 pts), César Ramírez (DPI `2145678900101` con 320 pts), María Fernanda Gómez (NIT `87654321-0` con 240 pts, antes CL-002), y clientes nuevos o sin puntos (Jimena Valdez y Consumidor Final).
+
+---
+
+## 👥 Directorio de Clientes con NIT y DPI Cargados
+
+| ID | Identificador (NIT / DPI) | Tipo | Nombre del Cliente | Puntos | Estado | Uso en Demostración |
+| :---: | :--- | :---: | :--- | :---: | :---: | :--- |
+| **1** | `12345678-9` | NIT | Juan Carlos Pérez | **1,316** | ACTIVO | Cliente VIP (canjea cualquier premio en vivo). |
+| **2** | `87654321-0` | NIT | María Fernanda Gómez | **240** | ACTIVO | Cliente frecuente (reemplazo oficial de CL-002). |
+| **3** | `2548123450101` | DPI | Carlos Eduardo López | **85** | ACTIVO | Consulta con CUI de 13 dígitos. |
+| **4** | `45678912-3` | NIT | Ana Lucía Morales | **52** | ACTIVO | Lista para canjear Menú Completo (50 pts). |
+| **5** | `1892345670101` | DPI | Roberto Alejandro Soto | **38** | ACTIVO | Listo para canjear Sándwich (30 pts). |
+| **6** | `98765432-1` | NIT | Sofía Isabel Martínez | **18** | ACTIVO | Lista para canjear Acompañamiento (15 pts). |
+| **7** | `3012456780101` | DPI | Diego Fernando Castillo | **12** | ACTIVO | Listo para canjear Bebida (10 pts). |
+| **8** | `54321678-K` | NIT | Jimena Alejandra Valdez | **0** | ACTIVO | Demuestra rechazo por saldo insuficiente. |
+| **9** | `2145678900101` | DPI | César Augusto Ramírez | **320** | ACTIVO | Cliente de compras corporativas. |
+| **10** | `CF` | NIT | Consumidor Final | **0** | INACTIVO | Demuestra bloqueo a clientes inactivos. |
 
 ### 5. Reporte de Historial de Canjes
 - Lista las 6 redenciones de recompensas realizadas entre septiembre y noviembre, detallando cliente, nombre del premio, costo en puntos y sello de tiempo.

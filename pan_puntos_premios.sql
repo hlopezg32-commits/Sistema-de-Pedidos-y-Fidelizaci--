@@ -143,16 +143,16 @@ CREATE TABLE canjes (
 ) ENGINE=InnoDB;
 
 INSERT INTO clientes (identificador, nombre, telefono, correo, puntos, estado, fecha_registro) VALUES
-('CL-001', 'Juan Carlos Perez', '55551234', 'juan.perez@correo.com', 1316, 'ACTIVO', '2026-08-15 10:00:00'),
-('CL-002', 'Maria Fernanda Gomez', '55552345', 'maria.gomez@correo.com', 240, 'ACTIVO', '2026-08-20 11:30:00'),
-('CL-003', 'Carlos Eduardo Lopez', '55553456', 'carlos.lopez@correo.com', 85, 'ACTIVO', '2026-09-01 09:15:00'),
-('CL-004', 'Ana Lucia Morales', '55554567', 'ana.morales@correo.com', 52, 'ACTIVO', '2026-09-10 14:20:00'),
-('CL-005', 'Roberto Alejandro Soto', '55555678', 'roberto.soto@correo.com', 38, 'ACTIVO', '2026-09-22 16:45:00'),
-('CL-006', 'Sofia Isabel Martinez', '55556789', 'sofia.martinez@correo.com', 18, 'ACTIVO', '2026-10-02 12:10:00'),
-('CL-007', 'Diego Fernando Castillo', '55557890', 'diego.castillo@correo.com', 12, 'ACTIVO', '2026-10-12 18:30:00'),
-('CL-008', 'Jimena Alejandra Valdez', '55558901', 'jimena.valdez@correo.com', 0, 'ACTIVO', '2026-10-25 15:00:00'),
-('CL-009', 'Cesar Augusto Ramirez', '55559012', 'cesar.ramirez@correo.com', 320, 'ACTIVO', '2026-10-28 17:15:00'),
-('CL-010', 'Consumidor Final', '00000000', 'cf@subnotway.com', 0, 'INACTIVO', '2026-11-01 08:00:00');
+('12345678-9', 'Juan Carlos Perez', '55551234', 'juan.perez@correo.com', 1316, 'ACTIVO', '2026-08-15 10:00:00'),
+('87654321-0', 'Maria Fernanda Gomez', '55552345', 'maria.gomez@correo.com', 240, 'ACTIVO', '2026-08-20 11:30:00'),
+('2548123450101', 'Carlos Eduardo Lopez', '55553456', 'carlos.lopez@correo.com', 85, 'ACTIVO', '2026-09-01 09:15:00'),
+('45678912-3', 'Ana Lucia Morales', '55554567', 'ana.morales@correo.com', 52, 'ACTIVO', '2026-09-10 14:20:00'),
+('1892345670101', 'Roberto Alejandro Soto', '55555678', 'roberto.soto@correo.com', 38, 'ACTIVO', '2026-09-22 16:45:00'),
+('98765432-1', 'Sofia Isabel Martinez', '55556789', 'sofia.martinez@correo.com', 18, 'ACTIVO', '2026-10-02 12:10:00'),
+('3012456780101', 'Diego Fernando Castillo', '55557890', 'diego.castillo@correo.com', 12, 'ACTIVO', '2026-10-12 18:30:00'),
+('54321678-K', 'Jimena Alejandra Valdez', '55558901', 'jimena.valdez@correo.com', 0, 'ACTIVO', '2026-10-25 15:00:00'),
+('2145678900101', 'Cesar Augusto Ramirez', '55559012', 'cesar.ramirez@correo.com', 320, 'ACTIVO', '2026-10-28 17:15:00'),
+('CF', 'Consumidor Final', '00000000', 'cf@subnotway.com', 0, 'INACTIVO', '2026-11-01 08:00:00');
 
 INSERT INTO productos (codigo, nombre, categoria, precio, existencia, estado) VALUES
 ('SAN001', 'Sandwich de ensalada de atun', 'SANDWICH', 75.00, 50, 'ACTIVO'),
