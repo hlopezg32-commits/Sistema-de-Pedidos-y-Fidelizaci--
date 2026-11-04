@@ -1,0 +1,71 @@
+========================================================================
+   SUBNOTWAY - PAN, PUNTOS Y PREMIOS (PROYECTO PROGRAMACION II - UMG)
+========================================================================
+
+CONTENIDO DEL PAQUETE:
+1. Subnotway/            -> Proyecto Web MVC en Spring Boot 3.4 + Thymeleaf + JDBC.
+2. Subnotway-Android/    -> Aplicacion movil nativa en Java para consulta de puntos.
+3. pan_puntos_premios.sql-> Script oficial de base de datos con tablas y datos.
+4. Diagrama_Clases_UML.png        -> Diagrama de clases de la arquitectura en capas.
+5. Diagrama_Entidad_Relacion.pdf  -> Modelo relacional en MySQL Workbench.
+6. Guia_Defensa_Proyecto.md       -> Guia de preguntas y respuestas para el examen oral.
+7. Instrucciones_de_Uso.md        -> Manual con formato markdown.
+
+------------------------------------------------------------------------
+PASO 1: BASE DE DATOS (XAMPP / MySQL)
+------------------------------------------------------------------------
+1. Abre el panel de control de XAMPP e inicia los servicios de Apache y MySQL.
+2. Entra a phpMyAdmin desde tu navegador: http://localhost/phpmyadmin
+3. Ve a la pestana 'Importar'.
+4. Selecciona el archivo 'pan_puntos_premios.sql' (ubicado en la raiz de esta carpeta).
+5. Haz clic en 'Importar'.
+6. Esto creara la base de datos 'pan_puntos_premios' con todas las tablas y datos de prueba ya cargados (productos con existencias, combos, clientes y recompensas oficiales de 10, 15, 30 y 50 puntos).
+
+------------------------------------------------------------------------
+PASO 2: EJECUTAR EL SISTEMA WEB (Subnotway)
+------------------------------------------------------------------------
+Opcion A (Doble clic - Recomendada):
+- Abre la carpeta 'Subnotway' y haz doble clic sobre 'ejecutar_servidor.bat'.
+
+Opcion B (Desde NetBeans o IntelliJ IDEA):
+- Abre NetBeans o tu IDE preferido.
+- Selecciona 'Open Project' y elige la carpeta 'Subnotway'.
+- Haz clic derecho sobre el proyecto -> 'Run' (o ejecuta la clase principal SubnotwayApplication.java).
+
+Opcion C (Por terminal):
+- Abre una terminal dentro de la carpeta 'Subnotway' y ejecuta:
+  mvn spring-boot:run
+
+Una vez iniciado, abre tu navegador web en:
+http://localhost:8080
+
+MODULOS DISPONIBLES EN LA WEB:
+- Inicio / Dashboard: http://localhost:8080/
+- Punto de Venta (POS): http://localhost:8080/ventas
+  (Selecciona cliente, agrega productos o combos, calcula cambio, acumula puntos y entrega pedidos).
+- Productos e Inventario: http://localhost:8080/productos
+  (Crear, editar, desactivar, reactivar y reabastecer stock con registro de auditoria).
+- Clientes: http://localhost:8080/clientes
+  (Registrar, editar, desactivar, consultar saldo de puntos e historial de pedidos).
+- Fidelizacion y Canjes: http://localhost:8080/fidelizacion
+  (Consultar cliente, historial de puntos y canjear recompensas con descuento de inventario).
+- Centro de Reportes PDF: http://localhost:8080/reportes
+  (Descarga directa en PDF de los 6 reportes empresariales con OpenPDF).
+- Endpoint REST para Android: http://localhost:8080/api/clientes/puntos/{identificador}
+
+------------------------------------------------------------------------
+PASO 3: APLICACION MOVIL (Subnotway-Android)
+------------------------------------------------------------------------
+1. Abre Android Studio.
+2. Selecciona 'Open' y busca la carpeta 'Subnotway-Android'.
+3. Espera que termine de sincronizar el proyecto Gradle.
+4. Conecta tu celular por USB (con depuracion activa) o inicia un emulador de Android Studio.
+5. Haz clic en 'Run' (boton verde de Play).
+6. En la aplicacion:
+   - Ingresa el identificador de un cliente (ej. CL-001 o el NIT 12345678-9).
+   - Haz clic en 'Consultar Saldo'.
+   - La app mostrara el nombre, el saldo acumulado de puntos y el estado del cliente en tiempo real.
+
+Notas de red:
+- Si usas el emulador de Android Studio, la direccion por defecto 'http://10.0.2.2:8080' se comunica directamente con tu Spring Boot local.
+- Si pruebas en un celular fisico por Wi-Fi, escribe en el campo 'Servidor API' la direccion IP local de tu computadora (ej. http://192.168.1.15:8080).
