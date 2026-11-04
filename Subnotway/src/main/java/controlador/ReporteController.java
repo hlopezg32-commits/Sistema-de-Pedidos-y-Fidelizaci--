@@ -56,7 +56,7 @@ public class ReporteController {
         reportePdfService.generarReporteProductosMasVendidos(response.getOutputStream());
     }
 
-    @GetMapping("/pdf/stock-bajo")
+    @GetMapping({"/pdf/stock-bajo", "/pdf/stock-critico"})
     public void exportarProductosStockBajo(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=Reporte_Stock_Critico.pdf");
