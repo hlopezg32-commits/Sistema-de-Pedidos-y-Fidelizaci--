@@ -5,11 +5,11 @@
 CONTENIDO DEL PAQUETE:
 1. Subnotway/            -> Proyecto Web MVC en Spring Boot 3.4 + Thymeleaf + JDBC.
 2. Subnotway-Android/    -> Aplicacion movil nativa en Java para consulta de puntos.
-3. pan_puntos_premios.sql-> Script oficial de base de datos con tablas y datos.
+3. pan_puntos_premios.sql-> Script oficial con 29 productos, 5 combos y datos historicos.
 4. Diagrama_Clases_UML.png        -> Diagrama de clases de la arquitectura en capas.
 5. Diagrama_Entidad_Relacion.pdf  -> Modelo relacional en MySQL Workbench.
 6. Guia_Defensa_Proyecto.md       -> Guia de preguntas y respuestas para el examen oral.
-7. Instrucciones_de_Uso.md        -> Manual con formato markdown.
+7. Instrucciones_de_Uso.md        -> Manual con formato markdown y guia de reportes.
 
 ------------------------------------------------------------------------
 PASO 1: BASE DE DATOS (XAMPP / MySQL)
@@ -19,7 +19,7 @@ PASO 1: BASE DE DATOS (XAMPP / MySQL)
 3. Ve a la pestana 'Importar'.
 4. Selecciona el archivo 'pan_puntos_premios.sql' (ubicado en la raiz de esta carpeta).
 5. Haz clic en 'Importar'.
-6. Esto creara la base de datos 'pan_puntos_premios' con todas las tablas y datos de prueba ya cargados (productos con existencias, combos, clientes y recompensas oficiales de 10, 15, 30 y 50 puntos).
+6. Esto creara la base de datos 'pan_puntos_premios' con todas las tablas, los 29 productos del menu, 5 combos, 10 clientes de prueba, 14 pedidos con fechas anteriores y de hoy, pagos en efectivo y tarjeta, y 6 canjes registrados.
 
 ------------------------------------------------------------------------
 PASO 2: EJECUTAR EL SISTEMA WEB (Subnotway)
@@ -44,13 +44,13 @@ MODULOS DISPONIBLES EN LA WEB:
 - Punto de Venta (POS): http://localhost:8080/ventas
   (Selecciona cliente, agrega productos o combos, calcula cambio, acumula puntos y entrega pedidos).
 - Productos e Inventario: http://localhost:8080/productos
-  (Crear, editar, desactivar, reactivar y reabastecer stock con registro de auditoria).
+  (29 productos con stock, alertas de stock bajo y registro de auditoria).
 - Clientes: http://localhost:8080/clientes
   (Registrar, editar, desactivar, consultar saldo de puntos e historial de pedidos).
 - Fidelizacion y Canjes: http://localhost:8080/fidelizacion
   (Consultar cliente, historial de puntos y canjear recompensas con descuento de inventario).
 - Centro de Reportes PDF: http://localhost:8080/reportes
-  (Descarga directa en PDF de los 6 reportes empresariales con OpenPDF).
+  (Descarga directa en PDF de los 6 reportes empresariales con OpenPDF y filtros de fecha).
 - Endpoint REST para Android: http://localhost:8080/api/clientes/puntos/{identificador}
 
 ------------------------------------------------------------------------
@@ -66,6 +66,27 @@ PASO 3: APLICACION MOVIL (Subnotway-Android)
    - Haz clic en 'Consultar Saldo'.
    - La app mostrara el nombre, el saldo acumulado de puntos y el estado del cliente en tiempo real.
 
-Notas de red:
-- Si usas el emulador de Android Studio, la direccion por defecto 'http://10.0.2.2:8080' se comunica directamente con tu Spring Boot local.
-- Si pruebas en un celular fisico por Wi-Fi, escribe en el campo 'Servidor API' la direccion IP local de tu computadora (ej. http://192.168.1.15:8080).
+------------------------------------------------------------------------
+PASO 4: GUIA PARA PROBAR LOS REPORTES EN PDF (/reportes)
+------------------------------------------------------------------------
+1. Reporte de Ventas por Periodo:
+   - Probar fecha de hoy (2026-11-03 a 2026-11-03): Muestra 2 ventas en efectivo y 1 en tarjeta.
+   - Probar mes pasado (2026-10-01 a 2026-10-31): Muestra 6 ventas del mes de octubre.
+   - Probar mes antepasado (2026-09-01 a 2026-09-30): Muestra 3 ventas de septiembre.
+   - Probar ultimos 30 dias (por defecto).
+
+2. Reporte de Productos Mas Vendidos:
+   - Muestra ranking con suma de ventas directas e ingredientes dentro de combos.
+   - Lideres: Sandwich de ensalada de atun, Cocacola, Doritos, Pollo al granjero, Pepsi.
+
+3. Reporte de Stock Critico (existencia <= 5):
+   - Muestra 5 productos en alerta: Monster rosa (0), Pork Jhon (2), Doritos incognita (3), Cheetos flaming hot (4), Galleta queso frambuesa (5).
+
+4. Reporte de Puntos de Clientes:
+   - Muestra los 10 clientes ordenados por puntos descendente.
+
+5. Reporte de Historial de Canjes:
+   - Muestra las 6 redenciones de premios efectuadas entre septiembre y noviembre.
+
+6. Reporte de Ventas de Menus Completos:
+   - Muestra el rendimiento de ventas e ingresos de los 5 combos oficiales.
